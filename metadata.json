@@ -1,0 +1,6 @@
+{
+  "name": "GlobalService Remanejamento",
+  "description": "Sistema de gerenciamento de remanejamento de funcionários com integração WhatsApp e histórico persistente.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

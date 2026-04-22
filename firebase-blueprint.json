@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user with access to remanejamento",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "pin": { "type": "string", "description": "4-6 digit code" },
+        "isLucio": { "type": "boolean" }
+      },
+      "required": ["name", "pin"]
+    },
+    "Remanejamento": {
+      "title": "Remanejamento",
+      "description": "Relocation record",
+      "type": "object",
+      "properties": {
+        "solicitante": { "type": "string" },
+        "nome": { "type": "string" },
+        "drt": { "type": "string" },
+        "origem": { "type": "string" },
+        "destino": { "type": "string" },
+        "fiscal": { "type": "string" },
+        "turno": { "type": "string", "enum": ["Diurno", "Noturno"] },
+        "dataServico": { "type": "string" },
+        "dataFolga": { "type": "string" },
+        "escala": { "type": "string", "enum": ["12x36", "5x2", "6x1"] },
+        "motivo": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["solicitante", "nome", "drt", "origem", "destino", "fiscal", "turno", "dataServico", "dataFolga", "escala", "motivo"]
+    },
+    "Config": {
+      "title": "Config",
+      "description": "Global settings",
+      "type": "object",
+      "properties": {
+        "whatsappNumber": { "type": "string" }
+      },
+      "required": ["whatsappNumber"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of users"
+    },
+    "/remanejamentos/{remanejamentoId}": {
+      "schema": "Remanejamento",
+      "description": "Collection of relocation events"
+    },
+    "/config/whatsapp": {
+      "schema": "Config",
+      "description": "System configuration"
+    }
+  }
+}

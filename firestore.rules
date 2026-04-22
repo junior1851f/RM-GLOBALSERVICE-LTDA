@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper to check if requester is signed in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read, list: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (resource.data.name != 'Lucio' || request.resource.data.name == 'Lucio');
+      allow delete: if isSignedIn() && resource.data.name != 'Lucio';
+    }
+
+    // Remanejamentos
+    match /remanejamentos/{remanejamentoId} {
+      allow read, list, create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Config
+    match /config/whatsapp {
+      allow read, get: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+  }
+}
